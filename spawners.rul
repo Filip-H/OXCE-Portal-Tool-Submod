@@ -1,0 +1,98 @@
+items:
+  # - type: STR_SECTOID_GRENADE
+  #   size: 0.1
+  #   weight: 3
+  #   bigSprite: 19
+  #   floorSprite: 19
+  #   handSprite: 19
+  #   power: 1
+  #   fuseType: 0
+  #   spawnUnitFaction: 1
+  #   spawnUnit: STR_SECTOID_SOLDIER
+  #   damageType: 3
+  #   battleType: 4
+  #   blastRadius: 1
+  # - type: STR_FLOATER_GRENADE
+  #   size: 0.1
+  #   weight: 3
+  #   bigSprite: 19
+  #   floorSprite: 19
+  #   handSprite: 19
+  #   power: 1
+  #   fuseType: 0
+  #   spawnUnitFaction: 1
+  #   spawnUnit: STR_FLOATER_SOLDIER
+  #   damageType: 3
+  #   battleType: 4
+  #   blastRadius: 1
+  # - type: STR_SNAKEMAN_GRENADE
+  #   size: 0.1
+  #   weight: 3
+  #   bigSprite: 19
+  #   floorSprite: 19
+  #   handSprite: 19
+  #   power: 1
+  #   fuseType: 0
+  #   spawnUnitFaction: 1
+  #   spawnUnit: STR_SNAKEMAN_SOLDIER
+  #   damageType: 3
+  #   battleType: 4
+  #   blastRadius: 1
+  # - type: STR_MUTON_GRENADE
+  #   size: 0.1
+  #   weight: 3
+  #   bigSprite: 19
+  #   floorSprite: 19
+  #   handSprite: 19
+  #   power: 1
+  #   fuseType: 0
+  #   spawnUnitFaction: 1
+  #   spawnUnit: STR_MUTON_SOLDIER
+  #   damageType: 3
+  #   battleType: 4
+  #   blastRadius: 1
+  # - type: STR_ETHEREAL_GRENADE
+  #   size: 0.1
+  #   weight: 3
+  #   bigSprite: 19
+  #   floorSprite: 19
+  #   handSprite: 19
+  #   power: 1
+  #   fuseType: 0
+  #   spawnUnitFaction: 1
+  #   spawnUnit: STR_ETHEREAL_SOLDIER
+  #   damageType: 3
+  #   battleType: 4
+  #   blastRadius: 1
+
+
+  - type: STR_CHAOS_PENETANTE_GRENADE
+    size: 0.1
+    weight: 3
+    bigSprite: 19
+    floorSprite: 19
+    handSprite: 19
+    power: 1
+    fuseType: 0
+    spawnUnitFaction: 1
+    spawnUnit: STR_CHAOS_PENETANTE
+    damageType: 3
+    battleType: 4
+    blastRadius: 1
+    explosionHitSound: 201
+
+
+  - type: STR_GSC_ARMORED_CAR_GRENADE
+    size: 0.1
+    weight: 3
+    bigSprite: 19
+    floorSprite: 19
+    handSprite: 19
+    power: 1
+    fuseType: 0
+    spawnUnitFaction: 1
+    spawnUnit: STR_GSC_ARMORED_CAR
+    damageType: 3
+    battleType: 4
+    blastRadius: 1
+    explosionHitSound: 201

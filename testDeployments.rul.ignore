@@ -1,0 +1,319 @@
+alienDeployments:
+  - type: STR_SMALL_SCOUT
+    reinforcements:
+      - type: FIRST_WAVE
+        maxRuns: 1
+        turns: [1]
+        spawnBlocks:
+          - NORTH
+        data:
+          - alienRank: 5 #soldier
+            lowQty: 1
+            highQty: 1
+            dQty: 0
+            extraQty: 0
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+  - type: STR_1
+    reinforcements:
+      - type: FIRST_WAVE
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        data:
+          - alienRank: 5 #soldier
+            lowQty: 1
+            highQty: 1
+            dQty: 0
+            extraQty: 0
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+
+  - type: STR_2
+    reinforcements:
+      - type: FIRST_WAVE
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        data:
+          - alienRank: 5 #soldier
+            lowQty: 2
+            highQty: 2
+            dQty: 0
+            extraQty: 0
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+  - type: STR_3
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 3
+            lowQty: 3
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_4
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 4
+            lowQty: 4
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_5
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 5
+            lowQty: 5
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_6
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 6
+            lowQty: 6
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_7
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 7
+            lowQty: 7
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_8
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 8
+            lowQty: 8
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_9
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 9
+            lowQty: 9
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_10
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 10
+            lowQty: 10
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_11
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 11
+            lowQty: 11
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_12
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 12
+            lowQty: 12
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_13
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 13
+            lowQty: 13
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_14
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 14
+            lowQty: 14
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_15
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 15
+            lowQty: 15
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_16
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 16
+            lowQty: 16
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_17
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 17
+            lowQty: 17
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_18
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 18
+            lowQty: 18
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_19
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 19
+            lowQty: 19
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+  - type: STR_20
+    reinforcements:
+      - data:
+          - alienRank: 5
+            dQty: 0
+            extraQty: 0
+            highQty: 20
+            lowQty: 20
+            percentageOutsideUfo: 0
+            itemSets:
+              - []
+        maxRuns: 1
+        spawnBlocks:
+          - NORTH
+        type: FIRST_WAVE
+

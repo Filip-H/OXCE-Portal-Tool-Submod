@@ -1,0 +1,11 @@
+name: "Portal Spawner"
+version: "1.0"
+description: "Companion mod for the portal spawner tool"
+author: Filip H
+id: Portals
+reservedSpace: 3
+master: "*"
+isMaster: false
+#resourceConfig: transparency.rul
+loadResources:
+  - UFO
