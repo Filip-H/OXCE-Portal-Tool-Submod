@@ -48,8 +48,8 @@ units:
     armor: PORTAL_ARMOR
     standHeight: 16
     kneelHeight: 12
-    canSurrender: true
-    autoSurrender: true
+    #canSurrender: true
+    #autoSurrender: true
     deathSound: 200
     
 
