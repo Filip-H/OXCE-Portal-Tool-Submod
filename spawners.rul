@@ -1,4 +1,35 @@
+# items:
+#   - type: STR_DEBUG_SPAWNER
+#     size: 0.1
+#     weight: 3
+#     bigSprite: 19
+#     floorSprite: 19
+#     handSprite: 19
+#     power: 1
+#     fuseType: 0
+#     spawnUnitFaction: 1
+#     spawnUnit: STR_PORTAL
+#     damageType: 3
+#     battleType: 4
+#     blastRadius: 1
+
+
+
+
 items:
+
+  - type: STR_PORTAL_CORPSE
+    size: 0.4
+    costSell: 0
+    weight: 30
+    bigSprite: 200
+    floorSprite: 200
+    invWidth: 2
+    invHeight: 1
+    recoveryPoints: 0
+    battleType: 11
+    armor: 255
+    recover: false
   # - type: STR_SECTOID_GRENADE
   #   size: 0.1
   #   weight: 3
@@ -80,7 +111,32 @@ items:
     battleType: 4
     blastRadius: 1
     explosionHitSound: 201
+    recover: false
+    armor: 500
+    tags:
+      Spawner: 1
 
+
+  - type: STR_CHAOS_PENETANTE_GRENADE_RECURRING
+    size: 0.1
+    weight: 3
+    bigSprite: 19
+    floorSprite: 19
+    handSprite: 19
+    power: 1
+    fuseType: 0
+    spawnUnitFaction: 1
+    spawnUnit: STR_CHAOS_PENETANTE
+    damageType: 3
+    battleType: 4
+    blastRadius: 1
+    explosionHitSound: 201
+    spawnItem: STR_CHAOS_PENETANTE_GRENADE_RECURRING
+    recover: false
+    armor: 500
+    tags:
+      Spawner: 1
+      Recurring: 1
 
   - type: STR_GSC_ARMORED_CAR_GRENADE
     size: 0.1
@@ -96,3 +152,315 @@ items:
     battleType: 4
     blastRadius: 1
     explosionHitSound: 201
+    recover: false
+    tags:
+      Spawner: 1
+
+
+units:
+
+  - type: STR_PORTAL
+    race: STR_PORTAL
+    stats:
+      tu: 1
+      stamina: 1
+      health: 300
+      bravery: 100
+      reactions: 1
+      firing: 1
+      throwing: 1
+      strength: 1
+      psiStrength: 1
+      psiSkill: 1
+      melee: 1
+    armor: PORTAL_ARMOR
+    standHeight: 16
+    kneelHeight: 12
+    #canSurrender: true
+    #autoSurrender: true
+    deathSound: 200
+    
+
+armors:
+
+  - type: PORTAL_ARMOR
+    spriteSheet: PORTAL.PCK
+    corpseBattle:
+      - STR_PORTAL_CORPSE
+    frontArmor: 1
+    sideArmor: 1
+    rearArmor: 1
+    underArmor: 1
+    bleedImmune: true
+    painImmune: true
+    zombiImmune: true
+    allowsMoving: false
+    drawingRoutine: 4
+    damageModifier:
+      - 1.0
+      - 1.0
+      - 0.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+    loftempsSet: [ 2 ]
+    tags:
+      Portal: 1
+    scripts:
+      hitUnit: |
+          var int recurring;
+          var int x;
+          var int y;
+          var int z;
+          if neq battle_action battle_action_hit;
+            set power 0;
+          end;
+          damaging_item.getTag recurring Tag.Recurring;
+          if eq recurring 1;
+            unit.getPosition.getX x;
+            unit.getPosition.getY y;
+            unit.getPosition.getZ z;
+            battle_game.setTag Tag.PassX x;
+            battle_game.setTag Tag.PassY y;
+            battle_game.setTag Tag.PassZ z;
+          end;
+          return power part side;
+      damageUnit: |
+          var int health;
+          var int x;
+          var int y;
+          var int z;
+
+          var int grenx;
+          var int greny;
+          var int grenz;
+          unit.getHealth health;
+          if ge to_health health;
+            unit.getPosition.getX x;
+            unit.getPosition.getY y;
+            unit.getPosition.getZ z;
+            loop var target_grenade battle_game.getItems.list;
+              target_grenade.getTag grenx Tag.GrenX;
+              target_grenade.getTag greny Tag.GrenY;
+              target_grenade.getTag grenz Tag.GrenZ;
+              if eq grenx x;
+                if eq greny y;
+                  if eq grenz z;
+                    target_grenade.setFuseTimer -1;
+                  end;
+                end;
+              end;
+            end;
+          end;
+          return;
+
+
+extraSounds:
+  - type: BATTLE.CAT
+    files:
+      200: Resources/portalBreak.ogg
+      201: Resources/spawnSound.wav
+
+extraSprites:
+  - type: PORTAL.PCK
+    subX: 32
+    subY: 40
+    width: 512
+    height: 200
+    files:
+      0: Resources/PortalSpriteSheet.png
+
+
+  - type: BIGOBS.PCK
+    files:
+      200: Resources/BigPortalCorpse.png
+
+  - type: FLOOROB.PCK
+    files:
+      200: Resources/FloorPortalCorpse.png
+
+extraStrings:
+  - type: en-US
+    strings:
+      STR_PORTAL: "Warp Portal"
+      STR_PORTAL_CORPSE: "Portal Remains"
+extended:
+  tags:
+    BattleGame:
+      PassX: int
+      PassY: int
+      PassZ: int
+    RuleArmor:
+      Portal: int
+    RuleItem:
+      Spawner: int
+      Recurring: int
+    BattleItem:
+      GrenX: int
+      GrenY: int
+      GrenZ: int
+      SpawnedThisTurn: int
+      
+
+  scripts:
+    createItem:
+      - offset: 50
+        code: |
+          var int recurring;
+          var int x;
+          var int y;
+          var int z;
+
+          item.getTag recurring Tag.Recurring;
+          if eq recurring 1;
+            battle_game.getTag x Tag.PassX;
+            battle_game.getTag y Tag.PassY;
+            battle_game.getTag z Tag.PassZ;
+
+            item.setTag Tag.GrenX x;
+            item.setTag Tag.GrenY y;
+            item.setTag Tag.GrenZ z;
+            battle_game.setTag Tag.PassX 0;
+            battle_game.setTag Tag.PassY 0;
+            battle_game.setTag Tag.PassZ 0;
+          end;
+          return;
+
+
+    newTurnItem:
+      - offset: 50
+        code: |
+          var int spawner;
+          item.getTag spawner Tag.Spawner;
+          if and eq side FACTION_HOSTILE eq spawner 1;
+            item.setTag Tag.SpawnedThisTurn 0;
+          end;
+          return;
+      
+      - offset: 51
+        code: |
+          var int spawner;
+          var int fusetimer;
+          var int fuseenabled;
+
+          var int grenx;
+          var int greny;
+          var int grenz;
+
+          var int x;
+          var int y;
+          var int z;
+
+          var int targetx;
+          var int targety;
+          var int targetz;
+
+          var int portal;
+          var int distance;
+          var int health;
+          var int stun;
+          var int blockedtiles;
+          var int spawnedthisturn;
+
+          var int targetspawner;
+          var int targetfusetimer;
+          var int targetfuseenabled;
+          var int targetspawnedthisturn;
+
+          var ptr Tile portal_tile;
+          var ptr Tile target_tile;
+
+          item.getTag spawner Tag.Spawner;
+          if and eq side FACTION_PLAYER eq spawner 1;
+
+            item.isFuseEnabled fuseenabled;
+            item.getFuseTimer fusetimer;
+            if and eq fuseenabled 1 eq fusetimer 0;
+              item.getTag grenx Tag.GrenX;
+              item.getTag greny Tag.GrenY;
+              item.getTag grenz Tag.GrenZ;
+              battle_game.getTile portal_tile grenx greny grenz;
+              loop var target_unit battle_game.getUnits.list;
+                target_unit.getTag portal Tag.Portal;
+                target_unit.getHealth health;
+                target_unit.getStun stun;
+                if lt stun health;
+                  if and gt health 0 neq portal 1;
+                    target_unit.getPosition.getX x;
+                    target_unit.getPosition.getY y;
+                    target_unit.getPosition.getZ z;
+                    battle_game.getTile target_tile x y z;
+                    target_tile.getDistanceTile distance portal_tile;
+                    if le distance 1;
+                      add blockedtiles 1;
+                    end;
+                  end;
+                end;
+              end;
+              item.getTag spawnedthisturn Tag.SpawnedThisTurn;
+              add blockedtiles spawnedthisturn;
+              if ge blockedtiles 8;
+                item.setFuseTimer 2;
+                return;
+              end;
+              loop var target_grenade battle_game.getItems.list;
+                target_grenade.getTag targetspawner Tag.Spawner;
+                if eq targetspawner 1;
+                  target_grenade.isFuseEnabled targetfuseenabled;
+                  target_grenade.getFuseTimer targetfusetimer;
+                  if and eq targetfuseenabled 1 eq targetfusetimer 0;
+                    target_grenade.getTag targetx Tag.GrenX;
+                    target_grenade.getTag targety Tag.GrenY;
+                    target_grenade.getTag targetz Tag.GrenZ;
+                    if eq targetx grenx;
+                      if eq targety greny;
+                        if eq targetz grenz;
+                          target_grenade.getTag targetspawnedthisturn Tag.SpawnedThisTurn;
+                          add targetspawnedthisturn 1;
+                          target_grenade.setTag Tag.SpawnedThisTurn targetspawnedthisturn;
+                        end;
+                      end;
+                    end;
+                  end;
+                end;
+              end;
+            end;
+          end;
+          return;
+      - offset: 52
+        code: |
+          var int recurring;
+          var int fuseenabled;
+          var int turncalc;
+          var int x;
+          var int y;
+          var int z;
+          var int portal;
+          var int health;
+          var ptr Tile portal_tile;
+          var ptr BattleUnit portal_unit;
+          item.getTag recurring Tag.Recurring;
+          if eq recurring 1;
+            item.isFuseEnabled fuseenabled;
+            if neq fuseenabled 1;
+              set turncalc turn;
+              mod turncalc 10;
+              if eq turncalc 9;
+                item.getTag x Tag.GrenX;
+                item.getTag y Tag.GrenY;
+                item.getTag z Tag.GrenZ;
+                battle_game.getTile portal_tile x y z;
+                portal_tile.getUnit portal_unit;
+                portal_unit.getTag portal Tag.Portal;
+                portal_unit.getHealth health;
+                if and eq portal 1 gt health 0;
+                  item.setFuseTimer 2;
+                end;
+              end;
+            end;
+          end;
+          return;
