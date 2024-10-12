@@ -216,11 +216,28 @@ armors:
           var int x;
           var int y;
           var int z;
-          if neq battle_action battle_action_hit;
-            set power 0;
+          var int distance;
+          var ptr Tile attacker_tile;
+          var ptr Tile victim_tile;
+
+
+          attacker.getPosition.getX x;
+          attacker.getPosition.getY y;
+          attacker.getPosition.getZ z;
+          battle_game.getTile attacker_tile x y z;
+            
+          unit.getPosition.getX x;
+          unit.getPosition.getY y;
+          unit.getPosition.getZ z;
+          battle_game.getTile victim_tile x y z;
+          attacker_tile.getDistanceTile distance victim_tile;
+          if gt distance 10;
+            set power 0;  
           end;
           damaging_item.getTag recurring Tag.Recurring;
           if eq recurring 1;
+          
+            debug_log "hit first";
             unit.getPosition.getX x;
             unit.getPosition.getY y;
             unit.getPosition.getZ z;
@@ -317,6 +334,7 @@ extended:
 
           item.getTag recurring Tag.Recurring;
           if eq recurring 1;
+            debug_log "create first";
             battle_game.getTag x Tag.PassX;
             battle_game.getTag y Tag.PassY;
             battle_game.getTag z Tag.PassZ;
