@@ -116,7 +116,6 @@ items:
     tags:
       Spawner: 1
 
-
   - type: STR_CHAOS_PENETANTE_GRENADE_RECURRING
     size: 0.1
     weight: 3
@@ -131,12 +130,12 @@ items:
     battleType: 4
     blastRadius: 1
     explosionHitSound: 201
-    spawnItem: STR_CHAOS_PENETANTE_GRENADE_RECURRING
+    #spawnItem: STR_CHAOS_PENETANTE_GRENADE_RECURRING
     recover: false
     armor: 500
     tags:
       Spawner: 1
-      Recurring: 1
+      #Recurring: 1
 
   - type: STR_GSC_ARMORED_CAR_GRENADE
     size: 0.1
@@ -234,42 +233,28 @@ armors:
           if gt distance 10;
             set power 0;  
           end;
-          damaging_item.getTag recurring Tag.Recurring;
-          if eq recurring 1;
-          
-            debug_log "hit first";
-            unit.getPosition.getX x;
-            unit.getPosition.getY y;
-            unit.getPosition.getZ z;
-            battle_game.setTag Tag.PassX x;
-            battle_game.setTag Tag.PassY y;
-            battle_game.setTag Tag.PassZ z;
-          end;
+          #damaging_item.getTag recurring Tag.Recurring;
+          #if eq recurring 1;          
+            #debug_log "hit first";
+            #unit.getPosition.getX x;
+            #unit.getPosition.getY y;
+            #unit.getPosition.getZ z;
+            #battle_game.setTag Tag.PassX x;
+            #battle_game.setTag Tag.PassY y;
+            #battle_game.setTag Tag.PassZ z;
+          #end;
           return power part side;
       damageUnit: |
           var int health;
-          var int x;
-          var int y;
-          var int z;
-
-          var int grenx;
-          var int greny;
-          var int grenz;
+          var int id;
+          var int grenid;
           unit.getHealth health;
           if ge to_health health;
-            unit.getPosition.getX x;
-            unit.getPosition.getY y;
-            unit.getPosition.getZ z;
+            unit.getId id;
             loop var target_grenade battle_game.getItems.list;
-              target_grenade.getTag grenx Tag.GrenX;
-              target_grenade.getTag greny Tag.GrenY;
-              target_grenade.getTag grenz Tag.GrenZ;
-              if eq grenx x;
-                if eq greny y;
-                  if eq grenz z;
-                    target_grenade.setFuseTimer -1;
-                  end;
-                end;
+              target_grenade.getTag grenid Tag.PortalId;
+              if eq id grenid;
+                target_grenade.setFuseTimer -1;
               end;
             end;
           end;
@@ -313,6 +298,8 @@ extended:
       PassZ: int
     RuleArmor:
       Portal: int
+    BattleUnit:
+      PortalNo: int
     RuleItem:
       Spawner: int
       Recurring: int
@@ -321,32 +308,33 @@ extended:
       GrenY: int
       GrenZ: int
       SpawnedThisTurn: int
+      PortalId: int
       
 
   scripts:
-    createItem:
-      - offset: 50
-        code: |
-          var int recurring;
-          var int x;
-          var int y;
-          var int z;
+    # createItem:
+    #   - offset: 50
+    #     code: |
+    #       var int recurring;
+    #       var int x;
+    #       var int y;
+    #       var int z;
 
-          item.getTag recurring Tag.Recurring;
-          if eq recurring 1;
-            debug_log "create first";
-            battle_game.getTag x Tag.PassX;
-            battle_game.getTag y Tag.PassY;
-            battle_game.getTag z Tag.PassZ;
+    #       item.getTag recurring Tag.Recurring;
+    #       if eq recurring 1;
+    #         debug_log "create first";
+    #         battle_game.getTag x Tag.PassX;
+    #         battle_game.getTag y Tag.PassY;
+    #         battle_game.getTag z Tag.PassZ;
 
-            item.setTag Tag.GrenX x;
-            item.setTag Tag.GrenY y;
-            item.setTag Tag.GrenZ z;
-            battle_game.setTag Tag.PassX 0;
-            battle_game.setTag Tag.PassY 0;
-            battle_game.setTag Tag.PassZ 0;
-          end;
-          return;
+    #         item.setTag Tag.GrenX x;
+    #         item.setTag Tag.GrenY y;
+    #         item.setTag Tag.GrenZ z;
+    #         battle_game.setTag Tag.PassX 0;
+    #         battle_game.setTag Tag.PassY 0;
+    #         battle_game.setTag Tag.PassZ 0;
+    #       end;
+    #       return;
 
 
     newTurnItem:
@@ -364,6 +352,10 @@ extended:
           var int spawner;
           var int fusetimer;
           var int fuseenabled;
+
+          var int grenid;
+          var int targetid;
+          var int portalid;
 
           var int grenx;
           var int greny;
@@ -398,9 +390,18 @@ extended:
             item.isFuseEnabled fuseenabled;
             item.getFuseTimer fusetimer;
             if and eq fuseenabled 1 eq fusetimer 0;
-              item.getTag grenx Tag.GrenX;
-              item.getTag greny Tag.GrenY;
-              item.getTag grenz Tag.GrenZ;
+              item.getTag grenid Tag.PortalId;
+              loop var portal_unit battle_game.getUnits.list;
+                portal_unit.getId portalid;
+                if eq portalid grenid;
+                  portal_unit.getPosition.getX grenx;
+                  portal_unit.getPosition.getY greny;
+                  portal_unit.getPosition.getZ grenz;
+                end;
+              end;
+              #item.getTag grenx Tag.GrenX;
+              #item.getTag greny Tag.GrenY;
+              #item.getTag grenz Tag.GrenZ;
               battle_game.getTile portal_tile grenx greny grenz;
               loop var target_unit battle_game.getUnits.list;
                 target_unit.getTag portal Tag.Portal;
@@ -431,9 +432,20 @@ extended:
                   target_grenade.isFuseEnabled targetfuseenabled;
                   target_grenade.getFuseTimer targetfusetimer;
                   if and eq targetfuseenabled 1 eq targetfusetimer 0;
-                    target_grenade.getTag targetx Tag.GrenX;
-                    target_grenade.getTag targety Tag.GrenY;
-                    target_grenade.getTag targetz Tag.GrenZ;
+                    
+                    target_grenade.getTag targetid Tag.PortalId;
+                    loop var portal_unit battle_game.getUnits.list;
+                      portal_unit.getId portalid;
+                      if eq portalid targetid;
+                        portal_unit.getPosition.getX targetx;
+                        portal_unit.getPosition.getY targety;
+                        portal_unit.getPosition.getZ targetz;
+                      end;
+                    end;
+
+                    #target_grenade.getTag targetx Tag.GrenX;
+                    #target_grenade.getTag targety Tag.GrenY;
+                    #target_grenade.getTag targetz Tag.GrenZ;
                     if eq targetx grenx;
                       if eq targety greny;
                         if eq targetz grenz;
@@ -449,36 +461,74 @@ extended:
             end;
           end;
           return;
-      - offset: 52
+      # - offset: 52 recurring script disabled
+      #   code: |
+      #     var int recurring;
+      #     var int fuseenabled;
+      #     var int turncalc;
+      #     var int x;
+      #     var int y;
+      #     var int z;
+      #     var int portal;
+      #     var int health;
+      #     var ptr Tile portal_tile;
+      #     var ptr BattleUnit portal_unit;
+      #     item.getTag recurring Tag.Recurring;
+      #     if eq recurring 1;
+      #       item.isFuseEnabled fuseenabled;
+      #       if neq fuseenabled 1;
+      #         set turncalc turn;
+      #         mod turncalc 10;
+      #         if eq turncalc 9;
+      #           item.getTag x Tag.GrenX;
+      #           item.getTag y Tag.GrenY;
+      #           item.getTag z Tag.GrenZ;
+      #           battle_game.getTile portal_tile x y z;
+      #           portal_tile.getUnit portal_unit;
+      #           portal_unit.getTag portal Tag.Portal;
+      #           portal_unit.getHealth health;
+      #           if and eq portal 1 gt health 0;
+      #             item.setFuseTimer 2;
+      #           end;
+      #         end;
+      #       end;
+      #     end;
+      #     return;
+
+    recolorUnitSprite:
+      - offset: 1
         code: |
-          var int recurring;
-          var int fuseenabled;
-          var int turncalc;
-          var int x;
-          var int y;
-          var int z;
+          var int currcolour;
           var int portal;
-          var int health;
-          var ptr Tile portal_tile;
-          var ptr BattleUnit portal_unit;
-          item.getTag recurring Tag.Recurring;
-          if eq recurring 1;
-            item.isFuseEnabled fuseenabled;
-            if neq fuseenabled 1;
-              set turncalc turn;
-              mod turncalc 10;
-              if eq turncalc 9;
-                item.getTag x Tag.GrenX;
-                item.getTag y Tag.GrenY;
-                item.getTag z Tag.GrenZ;
-                battle_game.getTile portal_tile x y z;
-                portal_tile.getUnit portal_unit;
-                portal_unit.getTag portal Tag.Portal;
-                portal_unit.getHealth health;
-                if and eq portal 1 gt health 0;
-                  item.setFuseTimer 2;
-                end;
-              end;
+          var int portalno;
+          unit.getTag portal Tag.Portal;
+          if eq portal 1;
+            unit.getTag portalno Tag.PortalNo;
+            if eq portalno 0;
+              return new_pixel;
             end;
+            mod portalno 7;
+            if eq portalno 0;
+            set_color new_pixel 9;
+            end;
+            if eq portalno 1;
+            set_color new_pixel 2;
+            end;
+            if eq portalno 2;
+            set_color new_pixel 4;
+            end;
+            if eq portalno 3;
+            set_color new_pixel 12;
+            end;
+            if eq portalno 4;
+            set_color new_pixel 6;
+            end;
+            if eq portalno 5;
+            set_color new_pixel 0;
+            end;
+            if eq portalno 6;
+            set_color new_pixel 15;
+            end;
+
           end;
-          return;
+          return new_pixel;
