@@ -195,6 +195,7 @@ armors:
     zombiImmune: true
     allowsMoving: false
     drawingRoutine: 4
+    alwaysVisible: true
     damageModifier:
       - 1.0
       - 1.0
