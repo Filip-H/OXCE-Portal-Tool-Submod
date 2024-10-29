@@ -249,12 +249,15 @@ armors:
           var int health;
           var int id;
           var int grenid;
+          var int passfuse;
           unit.getHealth health;
           if ge to_health health;
             unit.getId id;
             loop var target_grenade battle_game.getItems.list;
               target_grenade.getTag grenid Tag.PortalId;
               if eq id grenid;
+                target_grenade.getFuseTimer passfuse;
+                target_grenade.setTag Tag.PassFuse passfuse;
                 target_grenade.setFuseTimer -1;
               end;
             end;
@@ -310,6 +313,7 @@ extended:
       GrenZ: int
       SpawnedThisTurn: int
       PortalId: int
+      PassFuse: int
       
 
   scripts:
